@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.7/database.xsd"
+        namespace="ItBlaster\CounterManagementBundle\Model">
+
+    <table name="web_counters" description="Counters" phpName="WebCounter" >
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="varchar"  size="255" required="false" defaultValue="null" primaryString="true" />
+        <column name="number" type="varchar"  size="255" required="false" defaultValue="null" />
+        <column name="code" type="longvarchar"  required="false" defaultValue="null" />
+        <column name="type_id" type="integer" required="false" defaultValue="null" />
+        <column name="is_hidden" type="boolean" required="false" defaultValue="false" />
+    </table>
+
+    <table name="web_counter_goals" description="Counters" phpName="WebCounterGoal" >
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="varchar"  size="255" required="false" defaultValue="null" primaryString="true" />
+        <column name="alias" type="varchar"  size="255" required="false" defaultValue="null" />
+    </table>
+
+</database>s

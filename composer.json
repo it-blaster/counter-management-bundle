@@ -1,0 +1,30 @@
+{
+  "name" : "it-blaster/counter-management-bundle",
+  "description" : "Symfony 2 bundle for easy manage yandex and google analytic counters",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "selezenev",
+    "email" : "selezenev@gmail.com"
+  }],
+  "keywords" : [
+    "it-blaster metrika google analytics ga yandex api"
+  ],
+  "license" : [
+    "MIT"
+  ],
+  "require" : {
+    "symfony/symfony": ">=2.2",
+    "propel/propel1": "~1.6",
+    "sonata-project/admin-bundle": ">=2.3",
+    "sonata-project/propel-admin-bundle": "dev-master",
+    "google/apiclient": "1.0.*@beta",
+    "nixsolutions/yandex-php-library": "dev-master"
+  },
+  "autoload" : {
+    "psr-0" : {
+      "ItBlaster\\CounterManagementBundle" : ""
+    }
+  },
+  "minimum-stability": "dev",
+  "target-dir" : "ItBlaster/CounterManagementBundle"
+}

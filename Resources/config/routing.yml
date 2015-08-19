@@ -1,0 +1,3 @@
+it_blaster_counter_management_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ItBlasterCounterManagementBundle:Default:index }
