@@ -31,14 +31,17 @@ class YandexMetrika implements CounterProviderInterface {
     public function create($parameters = array())
     {
         // make auth
-        $this->client->requestAccessToken($parameters['code']);
+//        $this->client->requestAccessToken($parameters['code']);
 
         // prepare counter
         $counter = new Counter();
+        $counter->setSite('profitbase.ru');
         $counter->setName('Generated Counter');
 
+//        $accessToken = $this->client->getAccessToken();
+//        var_dump($accessToken);
         // add counter
-        $managementClient = new ManagementClient($this->client->getAccessToken());
+        $managementClient = new ManagementClient('7326119c49634e62b98749c57cac485d');
         return $managementClient->counters()->addCounter($counter);
     }
 

@@ -2,15 +2,12 @@ services:
 #    it_blaster_counter_management.example:
 #        class: ItBlaster\CounterManagementBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
-    counter_management.manager:
-        class: ItBlaster\CounterManagementBundle\Service\Manager
-        arguments: []
 
     counter_management.google_api_client:
-        class: \Google_Client
+        class: Google_Client
         calls:
-          - [setDeveloperKey, %google_api_developer_key%]
-          - [setApplicationName, %google_api_application_name%]
+          - [setDeveloperKey, [%google_api_developer_key%] ]
+          - [setApplicationName, [%google_api_application_name%] ]
 
     counter_management.google_analytics_provider:
         class: ItBlaster\CounterManagementBundle\Service\Provider\GoogleAnalytics
@@ -23,3 +20,11 @@ services:
     counter_management.yandex_oauth_client:
         class: Yandex\OAuth\OAuthClient
         arguments: [%yandex_metrika_client_id%, %yandex_metrika_client_secret%]
+
+
+    counter_management.manager:
+        class: ItBlaster\CounterManagementBundle\Service\Manager
+        arguments: []
+        calls:
+          - [addProvider, [@counter_management.yandex_metrika_provider] ]
+          - [addProvider, [@counter_management.google_analytics_provider] ]

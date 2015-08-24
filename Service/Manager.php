@@ -2,6 +2,8 @@
 
 namespace ItBlaster\CounterManagementBundle\Service;
 
+use ItBlaster\CounterManagementBundle\Service\Provider\CounterProviderInterface;
+
 class Manager
 {
 
@@ -25,6 +27,10 @@ class Manager
         return $this->providers;
     }
 
+    /**
+     * @param $identity
+     * @return CounterProviderInterface
+     */
     public function getProvider($identity)
     {
         if($this->hasProvider($identity) === false) {

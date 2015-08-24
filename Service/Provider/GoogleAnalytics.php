@@ -45,8 +45,6 @@ class GoogleAnalytics implements CounterProviderInterface {
         }
 
         return $response;
-
-
     }
 
     public function generateCode($number)
