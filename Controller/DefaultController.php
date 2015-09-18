@@ -10,5 +10,6 @@ class DefaultController extends Controller
     {
 
         return $this->render('ItBlasterCounterManagementBundle:Default:index.html.twig', array('name' => $name));
+
     }
 }
