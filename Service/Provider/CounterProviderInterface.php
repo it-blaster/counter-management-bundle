@@ -20,4 +20,9 @@ interface CounterProviderInterface {
 
     public function generateCode($number);
 
+    /**
+     * @return mixed|\PropelObjectCollection
+     */
+    public function getWebCounterList();
+
 }

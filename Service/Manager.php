@@ -27,6 +27,17 @@ class Manager
         return $this->providers;
     }
 
+    public function getProvidersChoices()
+    {
+        $choices = array();
+        /** @var CounterProviderInterface $provider */
+        foreach ($this->getProviders() as $provider) {
+            $choices[$provider->getIdentity()] = $provider->getName();
+        }
+
+        return $choices;
+    }
+
     /**
      * @param $identity
      * @return CounterProviderInterface

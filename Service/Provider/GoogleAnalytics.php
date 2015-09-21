@@ -2,9 +2,11 @@
 
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
+use ItBlaster\CounterManagementBundle\Model\WebCounterQuery;
+
 class GoogleAnalytics implements CounterProviderInterface {
 
-    const INDENTITY = 'ga';
+    const IDENTITY = 'ga';
 
     protected $client = null;
 
@@ -17,7 +19,7 @@ class GoogleAnalytics implements CounterProviderInterface {
 
     public function getIdentity()
     {
-        return self::INDENTITY;
+        return self::IDENTITY;
     }
 
     public function getName()
@@ -49,7 +51,12 @@ class GoogleAnalytics implements CounterProviderInterface {
 
     public function generateCode($number)
     {
-        return sprintf('Google Analytics code %s', $number);
+        return sprintf('console.log("Google Analytics code %s");', $number);
+    }
+
+    public function getWebCounterList()
+    {
+        return WebCounterQuery::create()->filterByTypeKey(self::IDENTITY)->find();
     }
 
 

@@ -18,7 +18,8 @@
     "sonata-project/admin-bundle": ">=2.3",
     "sonata-project/propel-admin-bundle": "dev-master",
     "google/apiclient": "1.0.*@beta",
-    "nixsolutions/yandex-php-library": "dev-master"
+    "nixsolutions/yandex-php-library": "dev-master",
+    "willdurand/propel-eventdispatcher-bundle": "@stable"
   },
   "autoload" : {
     "psr-0" : {

@@ -8,7 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
-
         return $this->render('ItBlasterCounterManagementBundle:Default:index.html.twig', array('name' => $name));
 
     }
