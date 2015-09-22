@@ -3,11 +3,13 @@
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
 
+use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Yandex\Metrica\Management\ManagementClient;
 use Yandex\Metrica\Management\Models\Counter;
 use Yandex\OAuth\OAuthClient;
 
-class YandexMetrika implements CounterProviderInterface {
+class YandexMetrika extends BaseCounter {
 
     const IDENTITY = 'yandex_metrika';
 
@@ -31,21 +33,23 @@ class YandexMetrika implements CounterProviderInterface {
     public function create($parameters = array())
     {
         // make auth
-        $this->client->requestAccessToken($parameters['code']);
+//        $this->client->requestAccessToken($parameters['code']);
 
         // prepare counter
         $counter = new Counter();
+        $counter->setSite('profitbase.ru');
         $counter->setName('Generated Counter');
 
+//        $accessToken = $this->client->getAccessToken();
+//        var_dump($accessToken);
         // add counter
-        $managementClient = new ManagementClient($this->client->getAccessToken());
+        $managementClient = new ManagementClient('7326119c49634e62b98749c57cac485d');
         return $managementClient->counters()->addCounter($counter);
     }
 
     public function generateCode($number)
     {
-        return sprintf('Yandex Metrika code %s', $number);
+        return sprintf('w.yaCounter%s = new Ya.Metrika({id: %s, enableAll: true});', $number, $number);
     }
-
 
 }

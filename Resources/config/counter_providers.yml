@@ -1,0 +1,19 @@
+parameters:
+    counter_management.google_analytics_provider.class: ItBlaster\CounterManagementBundle\Service\Provider\GoogleAnalytics
+    counter_management.yandex_metrika_provider.class: ItBlaster\CounterManagementBundle\Service\Provider\YandexMetrika
+
+services:
+
+    counter_management.google_analytics_provider:
+        class: %counter_management.google_analytics_provider.class%
+        arguments: [@counter_management.google_api_client, %google_api_account_id%]
+        public: false
+        tags:
+            - { name: counter_management.provider }
+
+    counter_management.yandex_metrika_provider:
+        class: %counter_management.yandex_metrika_provider.class%
+        arguments: [@counter_management.yandex_oauth_client]
+        public: false
+        tags:
+            - { name: counter_management.provider }

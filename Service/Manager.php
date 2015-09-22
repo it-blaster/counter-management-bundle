@@ -2,17 +2,14 @@
 
 namespace ItBlaster\CounterManagementBundle\Service;
 
+use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+
 class Manager
 {
 
     protected $providers = array();
 
-    function __construct($providers = array())
-    {
-    }
-
-
-    public function addProvider(CounterProviderInterface $provider)
+    public function addProvider(BaseCounter $provider)
     {
         $this->providers[$provider->getIdentity()] = $provider;
     }
@@ -25,6 +22,21 @@ class Manager
         return $this->providers;
     }
 
+    public function getProvidersChoices()
+    {
+        $choices = array();
+        /** @var BaseCounter $provider */
+        foreach ($this->getProviders() as $provider) {
+            $choices[$provider->getIdentity()] = $provider->getName();
+        }
+
+        return $choices;
+    }
+
+    /**
+     * @param $identity
+     * @return BaseCounter
+     */
     public function getProvider($identity)
     {
         if($this->hasProvider($identity) === false) {

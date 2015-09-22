@@ -2,9 +2,12 @@
 
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
-class GoogleAnalytics implements CounterProviderInterface {
+use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
-    const INDENTITY = 'ga';
+class GoogleAnalytics extends BaseCounter {
+
+    const IDENTITY = 'ga';
 
     protected $client = null;
 
@@ -17,7 +20,7 @@ class GoogleAnalytics implements CounterProviderInterface {
 
     public function getIdentity()
     {
-        return self::INDENTITY;
+        return self::IDENTITY;
     }
 
     public function getName()
@@ -45,14 +48,14 @@ class GoogleAnalytics implements CounterProviderInterface {
         }
 
         return $response;
-
-
     }
 
     public function generateCode($number)
     {
-        return sprintf('Google Analytics code %s', $number);
+        return sprintf('ga("create", "%s", "auto");', $number);
     }
+
+
 
 
 }
