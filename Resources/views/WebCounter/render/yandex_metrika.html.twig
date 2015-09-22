@@ -6,6 +6,11 @@
                 {% for web_counter in web_counter_list %}
                     {{ web_counter.code | raw }}
                 {% endfor %}
+                w.yandex_metrika_counters = {
+                    {% for web_counter in web_counter_list %}
+                    yaCounter{{ web_counter.number }}: yaCounter{{ web_counter.number }},
+                    {% endfor %}
+                };
             } catch (e) {
             }
         });
