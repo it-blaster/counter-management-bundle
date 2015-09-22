@@ -26,6 +26,5 @@
       "ItBlaster\\CounterManagementBundle" : ""
     }
   },
-  "minimum-stability": "dev",
   "target-dir" : "ItBlaster/CounterManagementBundle"
 }
