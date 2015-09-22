@@ -3,12 +3,13 @@
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
 
-use ItBlaster\CounterManagementBundle\Model\WebCounterQuery;
+use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Yandex\Metrica\Management\ManagementClient;
 use Yandex\Metrica\Management\Models\Counter;
 use Yandex\OAuth\OAuthClient;
 
-class YandexMetrika implements CounterProviderInterface {
+class YandexMetrika extends BaseCounter {
 
     const IDENTITY = 'yandex_metrika';
 
@@ -48,13 +49,7 @@ class YandexMetrika implements CounterProviderInterface {
 
     public function generateCode($number)
     {
-        return sprintf('var yaCounter%s = new Ya.Metrika({id: %s, enableAll: true});', $number, $number);
+        return sprintf('w.yaCounter%s = new Ya.Metrika({id: %s, enableAll: true});', $number, $number);
     }
-
-    public function getWebCounterList()
-    {
-        return WebCounterQuery::create()->filterByTypeKey(self::IDENTITY)->find();
-    }
-
 
 }

@@ -19,7 +19,6 @@ services:
 
     counter_management.manager:
         class: %counter_management.manager.class%
-        arguments: []
 
     counter_management.web_counter.listener:
         class: %counter_management.web_counter.listener.class%

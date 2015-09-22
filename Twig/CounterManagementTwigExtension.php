@@ -5,7 +5,6 @@ namespace ItBlaster\CounterManagementBundle\Twig;
 
 
 use ItBlaster\CounterManagementBundle\Service\Manager;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class CounterManagementTwigExtension extends \Twig_Extension
 {
@@ -44,7 +43,7 @@ class CounterManagementTwigExtension extends \Twig_Extension
     {
         $response = '';
         foreach ($this->counter_management_manager->getProviders() as $provider) {
-            $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter:' . $provider->getIdentity() . '.html.twig', array(
+            $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter/render:' . $provider->getIdentity() . '.html.twig', array(
                 'web_counter_list' => $this->counter_management_manager->getProvider($provider->getIdentity())->getWebCounterList()
             ));
         }

@@ -2,9 +2,10 @@
 
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
-use ItBlaster\CounterManagementBundle\Model\WebCounterQuery;
+use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
-class GoogleAnalytics implements CounterProviderInterface {
+class GoogleAnalytics extends BaseCounter {
 
     const IDENTITY = 'ga';
 
@@ -51,13 +52,10 @@ class GoogleAnalytics implements CounterProviderInterface {
 
     public function generateCode($number)
     {
-        return sprintf('console.log("Google Analytics code %s");', $number);
+        return sprintf('ga("create", "%s", "auto");', $number);
     }
 
-    public function getWebCounterList()
-    {
-        return WebCounterQuery::create()->filterByTypeKey(self::IDENTITY)->find();
-    }
+
 
 
 }
