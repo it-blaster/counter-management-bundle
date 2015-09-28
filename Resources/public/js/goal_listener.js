@@ -17,8 +17,7 @@ GoalListener.prototype.YandexMetrikaReachGoal = function (goal) {
 GoalListener.prototype.GoogleAnalyticsReachGoal = function (goal, action) {
     ga(function () {
         $.each(ga.getAll(), function (index, tracker) {
-            console.log(tracker);
-            tracker.send(goal, action)
+            tracker.send('event', goal, action)
         });
     });
 };
