@@ -52,7 +52,7 @@ class GoogleAnalytics extends BaseCounter {
 
     public function generateCode($number)
     {
-        return sprintf('ga("create", "%s", "auto");', $number);
+        return sprintf('ga("create", "%s", "auto"); ga("send", "pageview");', $number);
     }
 
 
