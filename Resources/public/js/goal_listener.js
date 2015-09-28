@@ -1,8 +1,8 @@
 var GoalListener = function () {
     var self = this;
-    $(window).on('reach.goal', function(event, goal) {
+    $(window).on('reach.goal', function(event, goal, action) {
         self.YandexMetrikaReachGoal(goal);
-        self.GoogleAnalyticsReachGoal(goal);
+        self.GoogleAnalyticsReachGoal(goal, action);
     });
 };
 
@@ -14,10 +14,11 @@ GoalListener.prototype.YandexMetrikaReachGoal = function (goal) {
     }
 };
 
-GoalListener.prototype.GoogleAnalyticsReachGoal = function (goal) {
+GoalListener.prototype.GoogleAnalyticsReachGoal = function (goal, action) {
     ga(function () {
-        $.each(ga.getAll(), function (tracker) {
-            tracker.send(goal)
+        $.each(ga.getAll(), function (index, tracker) {
+            console.log(tracker);
+            tracker.send(goal, action)
         });
     });
 };
