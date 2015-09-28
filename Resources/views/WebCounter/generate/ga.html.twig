@@ -1,1 +1,2 @@
-ga("create", "{{ number }}", "auto");
+ga("create", "{{ number }}", "auto", {"name" : "ga" + number});
+ga("ga" + number + ".send", "pageview");
