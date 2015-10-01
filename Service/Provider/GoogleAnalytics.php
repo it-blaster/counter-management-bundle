@@ -28,7 +28,7 @@ class GoogleAnalytics extends BaseCounter {
         return 'Google Analytics';
     }
 
-    public function create($parameters = array())
+    public function create($name, $site, $token)
     {
         $service = new \Google_Service_Analytics($this->client);
         $property = new \Google_Service_Analytics_Webproperty();

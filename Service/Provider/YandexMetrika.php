@@ -5,8 +5,11 @@ namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
 use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Bundle\FrameworkBundle\Tests\Console\Descriptor\ExtendedCallableClass;
 use Yandex\Metrica\Management\ManagementClient;
 use Yandex\Metrica\Management\Models\Counter;
+use Yandex\Metrica\Management\Models\ExtendCounter;
+use Yandex\Metrica\Management\Models\Goal;
 use Yandex\OAuth\OAuthClient;
 
 class YandexMetrika extends BaseCounter {
@@ -30,21 +33,36 @@ class YandexMetrika extends BaseCounter {
         return 'Яндекс.Метрика';
     }
 
-    public function create($parameters = array())
+
+    /**
+     * @param $name
+     * @param $site
+     * @param $token
+     * @return  Counter
+     */
+    public function create($name, $site, $token)
     {
-        // make auth
-//        $this->client->requestAccessToken($parameters['code']);
+        // $token = '7326119c49634e62b98749c57cac485d';
 
         // prepare counter
         $counter = new Counter();
-        $counter->setSite('profitbase.ru');
-        $counter->setName('Generated Counter');
 
-//        $accessToken = $this->client->getAccessToken();
-//        var_dump($accessToken);
-        // add counter
-        $managementClient = new ManagementClient('7326119c49634e62b98749c57cac485d');
-        return $managementClient->counters()->addCounter($counter);
+        $counter->setSite($site);
+        $counter->setName($name);
+
+
+        $managementClient = new ManagementClient($token);
+        /** @var Counter $savedCounter */
+        $savedCounter = $managementClient->counters()->addCounter($counter);
+
+        $goals = array();
+
+        foreach($goals as $goal)
+        {
+            $managementClient->goals()->addGoal($savedCounter->getId(), $goal);
+        }
+
+        return $savedCounter;
     }
 
     public function generateCode($number)

@@ -12,7 +12,7 @@ abstract class BaseCounter
 
     abstract public function getName();
 
-    abstract public function create($parameters = array());
+    abstract public function create($name, $site, $token);
 
     abstract public function generateCode($number);
 
