@@ -5,6 +5,7 @@ namespace ItBlaster\CounterManagementBundle\Listener;
 
 
 use ItBlaster\CounterManagementBundle\Model\WebCounter;
+use ItBlaster\CounterManagementBundle\Model\WebCounterGoalQuery;
 use ItBlaster\CounterManagementBundle\Model\WebCounterPeer;
 use ItBlaster\CounterManagementBundle\Service\Manager;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -29,23 +30,48 @@ class WebCounterListener
 
     public function onPreSave(GenericEvent $event)
     {
-        /** @var WebCounter $web_counter */
-        $web_counter = $event->getSubject();
-        if ($web_counter->isColumnModified(WebCounterPeer::NUMBER) || $web_counter->getCode() === null) {
-            $this->generateCode($web_counter);
+        /** @var WebCounter $counter */
+        $counter = $event->getSubject();
+
+        $provider = $this->counter_management_manager
+            ->getProvider($counter->getTypeKey());
+
+        /** Генерируем код счетчика */
+        if ($counter->isRequiredCodeGeneration()) {
+            $counter->setCode($provider->generateCode(
+                $counter->getNumber()
+            ));
+        }
+
+        /** Если указан флаг создания счетчика на сервере отправим необходимые запросы */
+        if($counter->isNew() && $counter->getPushToRemote() && $provider->getRemoteRepository()) {
+            $remoteCounter = $provider->getRemoteRepository()->push($counter);
+
+            $counter->setNumber($remoteCounter->getId());
+
+            $goals = WebCounterGoalQuery::create()
+                ->find();
+
+            /** @var WebCounterGoal $goal */
+            foreach($goals as $goal)
+            {
+                $provider->getRemoteRepository()
+                    ->addGoal($counter, $goal->getName(), $goal->getAlias(), $goal->getAction());
+            }
         }
     }
 
     /**
-     * @param WebCounter $web_counter
+     * @param WebCounter $counter
      */
-    protected function generateCode(WebCounter $web_counter)
+    protected function generateCode(WebCounter $counter)
     {
-        $provider = $this->counter_management_manager->getProvider($web_counter->getTypeKey());
-        $web_counter->setCode(
-            $provider->generateCode($web_counter->getNumber())
+        $provider = $this->counter_management_manager->getProvider($counter->getTypeKey());
+        $counter->setCode(
+            $provider->generateCode($counter->getNumber())
         );
     }
+
 
 
 }

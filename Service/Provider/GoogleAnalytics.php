@@ -28,27 +28,6 @@ class GoogleAnalytics extends BaseCounter {
         return 'Google Analytics';
     }
 
-    public function create($name, $site, $token)
-    {
-        $service = new \Google_Service_Analytics($this->client);
-        $property = new \Google_Service_Analytics_Webproperty();
-
-        if(isset($parameters['web_site_url'])) {
-            $property->setWebsiteUrl($parameters['web_site_url']);
-        }
-
-        if(isset($parameters['industry_vertical'])) {
-            $property->setIndustryVertical($parameters['industry_vertical']);
-        }
-
-        try {
-            $response = $service->management_webproperties->insert($this->accountId, $property);
-        } catch (\Google_Exception $exception) {
-
-        }
-
-        return $response;
-    }
 
     public function generateCode($number)
     {

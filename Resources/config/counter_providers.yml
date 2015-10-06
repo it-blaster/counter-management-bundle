@@ -13,7 +13,7 @@ services:
 
     counter_management.yandex_metrika_provider:
         class: %counter_management.yandex_metrika_provider.class%
-        arguments: [@counter_management.yandex_oauth_client]
+        arguments: [@counter_management.yandex_oauth_client, @counter_management.yandex_client]
         public: false
         tags:
             - { name: counter_management.provider }
