@@ -16,21 +16,21 @@ class CounterAddCommand extends ContainerAwareCommand {
     protected function configure()
     {
         $this
-            ->setName('counters:yandex:add')
+            ->setName('counters:add')
             ->setDescription('Create counter')
             ->addArgument(
                 'name',
-                InputArgument::OPTIONAL,
+                InputArgument::REQUIRED,
                 'Choose name for your counter?'
             )
             ->addArgument(
                 'site',
-                InputArgument::OPTIONAL,
+                InputArgument::REQUIRED,
                 'Please enter site domain'
             )
             ->addArgument(
                 'type',
-                InputArgument::OPTIONAL,
+                InputArgument::REQUIRED,
                 'What kind of counter do u want to create?'
             )
         ;
@@ -38,6 +38,11 @@ class CounterAddCommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $counterManager = $this->getContainer()->get('counter_management.manager');
+        $type = $input->getArgument('type');
+
+        if(!$counterManager->hasProvider($type))
+         throw new \InvalidArgumentException(sprintf('Provider with %s identity not found', $type));
 
         $name = $input->getArgument('name');
         $site = $input->getArgument('site');
@@ -46,7 +51,7 @@ class CounterAddCommand extends ContainerAwareCommand {
         $webCounter->setName($name);
         $webCounter->setSite($site);
         $webCounter->setPushToRemote(true);
-        $webCounter->setTypeKey(YandexMetrika::IDENTITY);
+        $webCounter->setTypeKey($type);
         $webCounter->save();
 
     }

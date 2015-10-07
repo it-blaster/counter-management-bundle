@@ -48,7 +48,6 @@ class CounterAddGoogleCommand  extends ContainerAwareCommand {
 
 
         $client = $this->getContainer()->get('counter_management.google_api_client');
-        $client->setScopes('https://www.googleapis.com/auth/analytics.readonly');
 
         $key_file_location = $this->getContainer()->getParameter('kernel.root_dir') . '/Resources/api/google.p12';
         $key = file_get_contents($key_file_location);

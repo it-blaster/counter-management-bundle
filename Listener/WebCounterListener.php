@@ -6,7 +6,7 @@ namespace ItBlaster\CounterManagementBundle\Listener;
 
 use ItBlaster\CounterManagementBundle\Model\WebCounter;
 use ItBlaster\CounterManagementBundle\Model\WebCounterGoalQuery;
-use ItBlaster\CounterManagementBundle\Model\WebCounterPeer;
+
 use ItBlaster\CounterManagementBundle\Service\Manager;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -26,10 +26,12 @@ class WebCounterListener
     public function __construct(Manager $counter_management_manager)
     {
         $this->counter_management_manager = $counter_management_manager;
+        var_dump(111);
     }
 
     public function onPreSave(GenericEvent $event)
     {
+
         /** @var WebCounter $counter */
         $counter = $event->getSubject();
 
@@ -44,8 +46,9 @@ class WebCounterListener
         }
 
         /** Если указан флаг создания счетчика на сервере отправим необходимые запросы */
+
         if($counter->isNew() && $counter->getPushToRemote() && $provider->getRemoteRepository()) {
-            $remoteCounter = $provider->getRemoteRepository()->push($counter);
+            $remoteCounter = $provider->getRemoteRepository()->push($counter->getName(), $counter->getSite());
 
             $counter->setNumber($remoteCounter->getId());
 
@@ -56,7 +59,7 @@ class WebCounterListener
             foreach($goals as $goal)
             {
                 $provider->getRemoteRepository()
-                    ->addGoal($counter, $goal->getName(), $goal->getAlias(), $goal->getAction());
+                    ->addGoal($remoteCounter, $goal->getName(), $goal->getAlias(), $goal->getAction(), $goal->getId());
             }
         }
     }

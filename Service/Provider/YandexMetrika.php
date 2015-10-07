@@ -14,10 +14,9 @@ class YandexMetrika extends BaseCounter {
 
     protected  $client = null;
 
-    function __construct(OAuthClient $client, RemoteSource $remoteSource)
+    function __construct(RemoteSource $remoteSource)
     {
         $this->remoteSource = $remoteSource;
-        $this->client = $client;
     }
 
     public function getIdentity()

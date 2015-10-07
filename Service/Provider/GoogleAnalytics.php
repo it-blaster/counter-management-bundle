@@ -3,6 +3,7 @@
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
 use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+use ItBlaster\CounterManagementBundle\Service\Remote\RemoteSource;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class GoogleAnalytics extends BaseCounter {
@@ -11,10 +12,9 @@ class GoogleAnalytics extends BaseCounter {
 
     protected $client = null;
 
-    function __construct(\Google_Client $client, $accountId)
+    function __construct(RemoteSource $remoteSource)
     {
-        $this->accountId = $accountId;
-        $this->client = $client;
+        $this->remoteSource = $remoteSource;
     }
 
 
