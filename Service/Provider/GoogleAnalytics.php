@@ -3,6 +3,7 @@
 namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
 use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
+use ItBlaster\CounterManagementBundle\Service\Remote\RemoteSource;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class GoogleAnalytics extends BaseCounter {
@@ -11,10 +12,9 @@ class GoogleAnalytics extends BaseCounter {
 
     protected $client = null;
 
-    function __construct(\Google_Client $client, $accountId)
+    function __construct(RemoteSource $remoteSource)
     {
-        $this->accountId = $accountId;
-        $this->client = $client;
+        $this->remoteSource = $remoteSource;
     }
 
 
@@ -28,27 +28,6 @@ class GoogleAnalytics extends BaseCounter {
         return 'Google Analytics';
     }
 
-    public function create($parameters = array())
-    {
-        $service = new \Google_Service_Analytics($this->client);
-        $property = new \Google_Service_Analytics_Webproperty();
-
-        if(isset($parameters['web_site_url'])) {
-            $property->setWebsiteUrl($parameters['web_site_url']);
-        }
-
-        if(isset($parameters['industry_vertical'])) {
-            $property->setIndustryVertical($parameters['industry_vertical']);
-        }
-
-        try {
-            $response = $service->management_webproperties->insert($this->accountId, $property);
-        } catch (\Google_Exception $exception) {
-
-        }
-
-        return $response;
-    }
 
     public function generateCode($number)
     {

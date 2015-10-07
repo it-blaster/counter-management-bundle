@@ -4,9 +4,8 @@ namespace ItBlaster\CounterManagementBundle\Service\Provider;
 
 
 use ItBlaster\CounterManagementBundle\Service\Provider\Base\BaseCounter;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Yandex\Metrica\Management\ManagementClient;
-use Yandex\Metrica\Management\Models\Counter;
+use ItBlaster\CounterManagementBundle\Service\Remote\RemoteSource;
+
 use Yandex\OAuth\OAuthClient;
 
 class YandexMetrika extends BaseCounter {
@@ -15,9 +14,9 @@ class YandexMetrika extends BaseCounter {
 
     protected  $client = null;
 
-    function __construct(OAuthClient $client)
+    function __construct(RemoteSource $remoteSource)
     {
-        $this->client = $client;
+        $this->remoteSource = $remoteSource;
     }
 
     public function getIdentity()
@@ -28,23 +27,6 @@ class YandexMetrika extends BaseCounter {
     public function getName()
     {
         return 'Яндекс.Метрика';
-    }
-
-    public function create($parameters = array())
-    {
-        // make auth
-//        $this->client->requestAccessToken($parameters['code']);
-
-        // prepare counter
-        $counter = new Counter();
-        $counter->setSite('profitbase.ru');
-        $counter->setName('Generated Counter');
-
-//        $accessToken = $this->client->getAccessToken();
-//        var_dump($accessToken);
-        // add counter
-        $managementClient = new ManagementClient('7326119c49634e62b98749c57cac485d');
-        return $managementClient->counters()->addCounter($counter);
     }
 
     public function generateCode($number)

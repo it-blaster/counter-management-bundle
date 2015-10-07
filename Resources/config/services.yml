@@ -4,6 +4,7 @@ parameters:
     counter_management.manager.class: ItBlaster\CounterManagementBundle\Service\Manager
     counter_management.web_counter.listener.class: ItBlaster\CounterManagementBundle\Listener\WebCounterListener
     counter_management.twig_extension.class: ItBlaster\CounterManagementBundle\Twig\CounterManagementTwigExtension
+    counter_management.yandex_client.class: Yandex\Metrica\Management\ManagementClient
 
 services:
 
@@ -12,13 +13,20 @@ services:
         calls:
           - [setDeveloperKey, [%google_api_developer_key%] ]
           - [setApplicationName, [%google_api_application_name%] ]
+          - [setClientId, ['866193973145-se05oosemb88oa3jdc7p8p61tju69k19.apps.googleusercontent.com']]
+          - [setClientSecret, ['e_wZFtMHeG348wXeuZLocS0a']]
 
     counter_management.yandex_oauth_client:
         class: %counter_management.yandex_oauth_client.class%
         arguments: [%yandex_metrika_client_id%, %yandex_metrika_client_secret%]
 
+    counter_management.yandex_client:
+        class: %counter_management.yandex_client.class%
+        arguments: [%yandex_metrika_token%]
+
     counter_management.manager:
         class: %counter_management.manager.class%
+
 
     counter_management.web_counter.listener:
         class: %counter_management.web_counter.listener.class%
