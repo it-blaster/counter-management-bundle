@@ -56,10 +56,10 @@ class WebCounterListener
                 ->find();
 
             /** @var WebCounterGoal $goal */
-            foreach($goals as $goal)
+            foreach($goals as $key => $goal)
             {
                 $provider->getRemoteRepository()
-                    ->addGoal($remoteCounter, $goal->getName(), $goal->getAlias(), $goal->getAction(), $goal->getId());
+                    ->addGoal($remoteCounter, $goal->getName(), $goal->getAlias(), $goal->getAction(), $key + 1);
             }
         }
     }
