@@ -26,7 +26,6 @@ class WebCounterListener
     public function __construct(Manager $counter_management_manager)
     {
         $this->counter_management_manager = $counter_management_manager;
-        var_dump(111);
     }
 
     public function onPreSave(GenericEvent $event)

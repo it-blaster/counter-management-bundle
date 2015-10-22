@@ -9,10 +9,10 @@ services:
         class: %counter_management.admin.web_counter.class%
         arguments: [~, ItBlaster\CounterManagementBundle\Model\WebCounter, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: counter_management.admin.web_counter.label }
+            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: Счетчики }
 
     counter_management.admin.goal:
         class: %counter_management.admin.goal.class%
         arguments: [~, ItBlaster\CounterManagementBundle\Model\WebCounterGoal, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: counter_management.admin.goal.label }
+            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: Настройка целей }
