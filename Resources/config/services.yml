@@ -30,7 +30,7 @@ services:
 
     counter_management.web_counter.listener:
         class: %counter_management.web_counter.listener.class%
-        arguments: [@counter_management.manager]
+        arguments: [@counter_management.manager, @twig]
         tags:
             - { name: propel.event_listener, class: ItBlaster\CounterManagementBundle\Model\WebCounter, event: propel.pre_save, method: 'onPreSave' }
 

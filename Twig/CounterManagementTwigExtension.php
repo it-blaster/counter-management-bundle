@@ -4,6 +4,7 @@
 namespace ItBlaster\CounterManagementBundle\Twig;
 
 
+use ItBlaster\CounterManagementBundle\Model\WebCounterQuery;
 use ItBlaster\CounterManagementBundle\Service\Manager;
 
 class CounterManagementTwigExtension extends \Twig_Extension
@@ -27,10 +28,15 @@ class CounterManagementTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_counter' => new \Twig_Function_Method($this, 'renderCounter', array(
+            'render_counters' => new \Twig_Function_Method($this, 'counters', array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
-            ))
+            )),
+
+            'render_counter' => new \Twig_Function_Method($this, 'counter', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
         );
     }
 
@@ -39,7 +45,7 @@ class CounterManagementTwigExtension extends \Twig_Extension
         return 'counter_management_twig';
     }
 
-    public function renderCounter(\Twig_Environment $environment)
+    public function counters(\Twig_Environment $environment)
     {
         $response = '';
         foreach ($this->counter_management_manager->getProviders() as $provider) {
@@ -50,5 +56,20 @@ class CounterManagementTwigExtension extends \Twig_Extension
         return $response;
     }
 
+
+    public function counter(\Twig_Environment $environment, $id)
+    {
+        $response = '';
+
+        if($counter = WebCounterQuery::create()->findOneById($id)) {
+            $provider =  $this->counter_management_manager->getProvider($counter->getTypeKey());
+
+            $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter/render:' . $provider->getIdentity() . '.html.twig', array(
+                'web_counter_list' => array($counter)
+            ));
+        }
+
+        return $response;
+    }
 
 }

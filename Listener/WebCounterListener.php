@@ -14,17 +14,21 @@ class WebCounterListener
 {
 
 
+    protected $twig = null;
+
     /**
      * @var Manager
      */
     protected $counter_management_manager;
 
     /**
-     * WebCounterListener constructor.
+     * Constructor
      * @param Manager $counter_management_manager
+     * @param \Twig_Environment $twig
      */
-    public function __construct(Manager $counter_management_manager)
+    public function __construct(Manager $counter_management_manager, \Twig_Environment $twig)
     {
+        $this->twig = $twig;
         $this->counter_management_manager = $counter_management_manager;
     }
 
@@ -70,7 +74,7 @@ class WebCounterListener
     {
         $provider = $this->counter_management_manager->getProvider($counter->getTypeKey());
         $counter->setCode(
-            $provider->generateCode($counter->getNumber())
+            $provider->generateCode($this->twig->getExtension('counter_management_twig')->counter($this->twig, $counter->getId()))
         );
     }
 
