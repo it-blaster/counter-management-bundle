@@ -50,7 +50,7 @@ class WebCounterListener
 
         /** Если указан флаг создания счетчика на сервере отправим необходимые запросы */
 
-        if($counter->isNew() && $counter->getPushToRemote() && $provider->getRemoteRepository()) {
+        if($counter->isNew() && !$counter->getNumber() && $provider->getRemoteRepository()) {
             $remoteCounter = $provider->getRemoteRepository()->push($counter->getName(), $counter->getSite());
 
             $counter->setNumber($remoteCounter->getId());

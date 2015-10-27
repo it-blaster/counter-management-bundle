@@ -10,6 +10,14 @@
                 <source>counter_management.admin.goal.label</source>
                 <target>Настройка целей</target>
             </trans-unit>
+            <trans-unit id="Web Counter List">
+                <source>Web Counter List</source>
+                <target>Список счетчиков</target>
+            </trans-unit>
+            <trans-unit id="Web Counter Goal List">
+                <source>Web Counter Goal List</source>
+                <target>Список целей</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

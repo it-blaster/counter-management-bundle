@@ -9,7 +9,8 @@
 namespace ItBlaster\CounterManagementBundle\Service\Remote;
 
 
-class GoogleRemoteSource extends RemoteSource {
+class GoogleRemoteSource extends RemoteSource
+{
 
     protected $account_id;
     protected $serviceAccount;
@@ -29,7 +30,7 @@ class GoogleRemoteSource extends RemoteSource {
 
     public function getService()
     {
-        if($this->service === null) {
+        if ($this->service === null) {
             $this->service = new \Google_Service_Analytics($this->client);
         }
 
@@ -43,7 +44,7 @@ class GoogleRemoteSource extends RemoteSource {
         $this->authenticate();
 
 
-        $property =  new \Google_Service_Analytics_Webproperty();
+        $property = new \Google_Service_Analytics_Webproperty();
         $property->setName($name);
         $property->setWebsiteUrl('http://' . $site);
 
@@ -63,6 +64,7 @@ class GoogleRemoteSource extends RemoteSource {
         return $property;
 
     }
+
 
     public function addGoal($counter, $name, $url, $action = null, $id = null)
     {
@@ -95,7 +97,48 @@ class GoogleRemoteSource extends RemoteSource {
 
     }
 
-    protected function authenticate() {
+
+    /**
+     * @param $id
+     * @return \Google_Service_Analytics_Webproperty
+     */
+    public function getCounter($id)
+    {
+        $counter = null;
+
+        $this->authenticate();
+
+        $accounts = $this->getService()->management_accounts->listManagementAccounts();
+        foreach ($accounts as $account) {
+
+            try {
+                $counter = $this->getService()
+                    ->management_webproperties->get($account->getId(), $id);
+            } catch (\Google_Service_Exception $e) {
+
+            }
+        }
+
+
+        return $counter;
+    }
+
+    /**
+     * @param \Google_Service_Analytics_Webproperty $counter
+     * @return \Google_Service_Analytics_Goals
+     */
+    public function getGoals($counter)
+    {
+        $this->authenticate();
+
+        $goals = $this->getService()
+            ->management_goals->listManagementGoals($counter->getAccountId(), $counter->getId(), $counter->getDefaultProfileId());
+
+        return $goals;
+    }
+
+    protected function authenticate()
+    {
 
         $key_file_location = $this->pathToKey;
         $key = file_get_contents($key_file_location);
@@ -115,6 +158,11 @@ class GoogleRemoteSource extends RemoteSource {
         if ($this->client->getAuth()->isAccessTokenExpired()) {
             $this->client->getAuth()->refreshTokenWithAssertion();
         }
+    }
+
+    public function hasGoal($counter, $goal)
+    {
+        return false;
     }
 
 

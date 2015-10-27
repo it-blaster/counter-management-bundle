@@ -1,8 +1,10 @@
 parameters:
     counter_management.google_analytics_provider.class: ItBlaster\CounterManagementBundle\Service\Provider\GoogleAnalytics
     counter_management.yandex_metrika_provider.class: ItBlaster\CounterManagementBundle\Service\Provider\YandexMetrika
+    counter_management.persisted_provider.class: ItBlaster\CounterManagementBundle\Service\Provider\Persisted
     counter_management.yandex_remote.class: ItBlaster\CounterManagementBundle\Service\Remote\YandexRemoteSource
     counter_management.google_remote.class: ItBlaster\CounterManagementBundle\Service\Remote\GoogleRemoteSource
+
 
 
 services:
@@ -17,6 +19,12 @@ services:
     counter_management.yandex_metrika_provider:
         class: %counter_management.yandex_metrika_provider.class%
         arguments: [@counter_management.yandex_remote]
+        public: false
+        tags:
+            - { name: counter_management.provider }
+
+    counter_management.persisted_provider:
+        class: %counter_management.persisted_provider.class%
         public: false
         tags:
             - { name: counter_management.provider }

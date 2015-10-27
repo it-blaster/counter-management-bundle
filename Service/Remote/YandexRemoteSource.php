@@ -2,14 +2,18 @@
 
 namespace ItBlaster\CounterManagementBundle\Service\Remote;
 
+use Yandex\Metrica\Management\ManagementClient;
 use Yandex\Metrica\Management\Models\Condition;
 use Yandex\Metrica\Management\Models\Conditions;
 use Yandex\Metrica\Management\Models\Counter;
+use Yandex\Metrica\Management\Models\CounterParams;
 use Yandex\Metrica\Management\Models\Goal;
 
 class YandexRemoteSource  extends  RemoteSource {
 
     protected $manager;
+
+    /** @var  ManagementClient */
     protected $client;
 
     function __construct($client)
@@ -59,6 +63,38 @@ class YandexRemoteSource  extends  RemoteSource {
         /** @var Counter $counter */
         $this->client->goals()->addGoal($counter->getId(), $goal);
 
+    }
+
+
+
+    public function getCounter($id)
+    {
+        return $this->client->counters()->getCounter($id, new CounterParams());
+    }
+
+
+    public function getGoals($counter)
+    {
+        return $this->client->goals()->getGoals($counter->getId());
+    }
+
+    public function hasGoal($counter, $goal)
+    {
+        $goals =  $this->client->goals()->getGoals($counter->getId());
+
+        /** @var Goal $remote */
+        foreach($goals as $remote) {
+            $conditions = $remote->getConditions() ? $remote->getConditions()->getAll() : array();
+
+            /** @var Condition $condition */
+            foreach($conditions as $condition) {
+                if($condition->getUrl() == $goal->getAlias()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 
