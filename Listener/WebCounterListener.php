@@ -41,13 +41,6 @@ class WebCounterListener
         $provider = $this->counter_management_manager
             ->getProvider($counter->getTypeKey());
 
-        /** Генерируем код счетчика */
-        if ($counter->isRequiredCodeGeneration()) {
-            $counter->setCode($provider->generateCode(
-                $counter->getNumber()
-            ));
-        }
-
         /** Если указан флаг создания счетчика на сервере отправим необходимые запросы */
 
         if($counter->isNew() && !$counter->getNumber() && $provider->getRemoteRepository()) {
@@ -73,9 +66,6 @@ class WebCounterListener
     protected function generateCode(WebCounter $counter)
     {
         $provider = $this->counter_management_manager->getProvider($counter->getTypeKey());
-        $counter->setCode(
-            $provider->generateCode($this->twig->getExtension('counter_management_twig')->counter($this->twig, $counter->getId()))
-        );
     }
 
 

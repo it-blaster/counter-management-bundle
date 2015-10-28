@@ -32,7 +32,10 @@ class CounterManagementTwigExtension extends \Twig_Extension
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
-
+            'render_persisted_counters' => new \Twig_Function_Method($this, 'persisted', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
             'render_counter' => new \Twig_Function_Method($this, 'counter', array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
@@ -50,7 +53,7 @@ class CounterManagementTwigExtension extends \Twig_Extension
         $response = '';
         foreach ($this->counter_management_manager->getProviders() as $provider) {
             $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter/render:' . $provider->getIdentity() . '.html.twig', array(
-                'web_counter_list' => $this->counter_management_manager->getProvider($provider->getIdentity())->getWebCounterList()
+                'web_counter_list' => $provider->getWebCounterList()
             ));
         }
         return $response;
@@ -69,6 +72,18 @@ class CounterManagementTwigExtension extends \Twig_Extension
             ));
         }
 
+        return $response;
+    }
+
+    public function persisted(\Twig_Environment $environment)
+    {
+        $response = '';
+
+        $provider = $this->counter_management_manager->getProvider('persisted');
+
+        $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter/render:' . $provider->getIdentity() . '.html.twig', array(
+            'web_counter_list' => $provider->getWebCounterList()
+        ));
         return $response;
     }
 

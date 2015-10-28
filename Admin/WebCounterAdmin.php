@@ -92,7 +92,6 @@ class WebCounterAdmin extends Admin
                 'required' => false,
                 'help' => 'оставте пустым что бы создать новый',
                 'constraints' => array(
-                    new NotBlank()
                 )
             ))
             ->add('Code', null, array(
