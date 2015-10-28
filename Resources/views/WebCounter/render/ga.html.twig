@@ -5,7 +5,7 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     {% for web_counter in web_counter_list %}
-        ga("create", "{{ web_counter.number }}", "auto", {"name" : "ga" + {{ web_counter.id }} });
+        ga("create", "{{ web_counter.number }}", "auto", {"name" : "ga{{ web_counter.id }}" });
         ga("ga{{ web_counter.id }}.send", "pageview");
     {% endfor %}
 
