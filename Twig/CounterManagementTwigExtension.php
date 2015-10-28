@@ -52,9 +52,11 @@ class CounterManagementTwigExtension extends \Twig_Extension
     {
         $response = '';
         foreach ($this->counter_management_manager->getProviders() as $provider) {
-            $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter/render:' . $provider->getIdentity() . '.html.twig', array(
-                'web_counter_list' => $provider->getWebCounterList()
-            ));
+            if($provider->getIdentity() !== 'persisted') {
+                $response .= $environment->render('ItBlasterCounterManagementBundle:WebCounter/render:' . $provider->getIdentity() . '.html.twig', array(
+                    'web_counter_list' => $provider->getWebCounterList()
+                ));
+            }
         }
         return $response;
     }
