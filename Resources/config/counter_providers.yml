@@ -7,6 +7,7 @@ parameters:
 
 
 
+
 services:
 
     counter_management.google_analytics_provider:
@@ -36,5 +37,5 @@ services:
 
     counter_management.google_remote:
         class: %counter_management.google_remote.class%
-        arguments: [%google_api_account_id%, %google_api_service_account%, @counter_management.google_api_client, %google_api_key%]
+        arguments: [%google_api_account_id%, %google_api_service_account%, @counter_management.google_api_client, %kernel.root_dir%/%google_api_key%]
         public: false
