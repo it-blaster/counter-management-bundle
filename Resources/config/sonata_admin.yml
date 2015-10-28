@@ -1,7 +1,7 @@
 parameters:
     counter_management.admin.web_counter.class: ItBlaster\CounterManagementBundle\Admin\WebCounterAdmin
     counter_management.admin.goal.class: ItBlaster\CounterManagementBundle\Admin\GoalAdmin
-    counter_management.admin.group: counter_management.admin.group
+    counter_management.admin.group: Маркетинг
 
 services:
 
@@ -9,10 +9,12 @@ services:
         class: %counter_management.admin.web_counter.class%
         arguments: [~, ItBlaster\CounterManagementBundle\Model\WebCounter, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: counter_management.admin.web_counter.label }
+            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: Счетчики }
+        calls:
+            - ['setTemplate', [edit, 'ItBlasterCounterManagementBundle:WebCounter/admin:edit.html.twig']]
 
     counter_management.admin.goal:
         class: %counter_management.admin.goal.class%
         arguments: [~, ItBlaster\CounterManagementBundle\Model\WebCounterGoal, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: counter_management.admin.goal.label }
+            - {name: sonata.admin, manager_type: propel, group: %counter_management.admin.group%, label: Настройка целей }

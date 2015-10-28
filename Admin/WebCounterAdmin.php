@@ -30,7 +30,22 @@ class WebCounterAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         parent::configureRoutes($collection);
-        $collection->remove('show');
+
+        $collection
+            ->remove('show');
+
+        $collection
+            ->add('install-counter',
+                'install/counter/{id}',
+                array('_controller' => 'WebCounterAdminController:installCounter'),
+                array('id' => '\d+')
+            )
+            ->add('install-goals',
+                'install/goals/{id}',
+                array('_controller' => 'ItBlasterCounterManagementBundle:WebCounterAdmin:installGoals'),
+                array('id' => '\d+')
+            )
+        ;
     }
 
 
@@ -74,18 +89,20 @@ class WebCounterAdmin extends Admin
             ))
             ->add('Number', null, array(
                 'label' => 'Номер счетчика',
-                'required' => true,
+                'required' => false,
+                'help' => 'оставте пустым что бы создать новый',
                 'constraints' => array(
                     new NotBlank()
                 )
             ))
             ->add('Code', null, array(
                 'label' => 'Код счетчика',
-                'disabled' => true,
+                'disabled' => false,
             ))
             ->add('TypeKey', 'choice', array(
                 'label' => 'Тип счетчика',
-                'choices' => $this->getConfigurationPool()->getContainer()->get('counter_management.manager')->getProvidersChoices(),
+                'choices' => $this->getConfigurationPool()->getContainer()
+                    ->get('counter_management.manager')->getProvidersChoices(),
                 'constraints' => array(
                     new NotBlank()
                 )
@@ -104,4 +121,6 @@ class WebCounterAdmin extends Admin
             ->add('Code')
         ;
     }
+
+
 }

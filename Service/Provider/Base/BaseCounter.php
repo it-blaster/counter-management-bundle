@@ -3,7 +3,6 @@
 namespace ItBlaster\CounterManagementBundle\Service\Provider\Base;
 
 use ItBlaster\CounterManagementBundle\Model\WebCounterQuery;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 abstract class BaseCounter
 {
@@ -15,7 +14,6 @@ abstract class BaseCounter
     abstract public function getName();
 
     abstract public function generateCode($number);
-
 
     public function getRemoteRepository()
     {

@@ -17,11 +17,6 @@ class GoalAdmin extends Admin
     {
         $datagridMapper
             ->add('Name')
-            ->add('Code')
-            ->add('Counter')
-            ->add('Page')
-            ->add('ButtonType')
-            ->add('Vendor')
         ;
     }
 
@@ -33,11 +28,6 @@ class GoalAdmin extends Admin
         $listMapper
             ->add('Id')
             ->add('Name')
-            ->add('Code')
-            ->add('Counter')
-            ->add('Page')
-            ->add('ButtonType')
-            ->add('Vendor')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -56,11 +46,6 @@ class GoalAdmin extends Admin
         $formMapper
             ->add('Id')
             ->add('Name')
-            ->add('Code')
-            ->add('Counter')
-            ->add('Page')
-            ->add('ButtonType')
-            ->add('Vendor')
         ;
     }
 
@@ -72,11 +57,6 @@ class GoalAdmin extends Admin
         $showMapper
             ->add('Id')
             ->add('Name')
-            ->add('Code')
-            ->add('Counter')
-            ->add('Page')
-            ->add('ButtonType')
-            ->add('Vendor')
         ;
     }
 }

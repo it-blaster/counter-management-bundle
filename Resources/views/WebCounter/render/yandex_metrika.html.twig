@@ -4,13 +4,17 @@
         (w[c] = w[c] || []).push(function () {
             try {
                 {% for web_counter in web_counter_list %}
-                    {{ web_counter.code | raw }}
+                    w.yaCounter{{ web_counter.number }} = new Ya.Metrika({id: {{ web_counter.number }}, enableAll: true});
                 {% endfor %}
-                w.yandex_metrika_counters = {
-                    {% for web_counter in web_counter_list %}
-                    yaCounter{{ web_counter.number }}: yaCounter{{ web_counter.number }},
-                    {% endfor %}
-                };
+
+                {% if web_counter_list|length > 1 %}
+                    w.yandex_metrika_counters = {
+                        {% for web_counter in web_counter_list %}
+                            yaCounter{{ web_counter.number }}: yaCounter{{ web_counter.number }},
+                        {% endfor %}
+                    };
+                {% endif %}
+
             } catch (e) {
             }
         });

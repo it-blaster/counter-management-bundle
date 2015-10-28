@@ -5,7 +5,8 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     {% for web_counter in web_counter_list %}
-        {{ web_counter.code | raw }}
+        ga("create", "{{ web_counter.number }}", "auto", {"name" : "ga" + web_counter.number});
+        ga("ga{{ web_counter.number }}.send", "pageview");
     {% endfor %}
-</script>
 
+</script>
