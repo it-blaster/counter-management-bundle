@@ -87,6 +87,13 @@ class WebCounterAdmin extends Admin
                     new NotBlank()
                 )
             ))
+            ->add('Site', null, array(
+                'label' => 'Адрес сайта',
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
             ->add('Number', null, array(
                 'label' => 'Номер счетчика',
                 'required' => false,
