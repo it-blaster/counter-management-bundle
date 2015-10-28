@@ -91,7 +91,8 @@ class GoogleRemoteSource extends RemoteSource
 
         $goal->setEventDetails($event);
 
-        $goal = $this->getService()->management_goals->insert($this->account_id, $counter->getId(), $counter->getDefaultProfileId(), $goal);
+        $goal = $this->getService()->management_goals
+            ->insert($counter->getAccountId(), $counter->getId(), $counter->getDefaultProfileId(), $goal);
 
         return $goal;
 
@@ -109,6 +110,7 @@ class GoogleRemoteSource extends RemoteSource
         $this->authenticate();
 
         $accounts = $this->getService()->management_accounts->listManagementAccounts();
+
         foreach ($accounts as $account) {
 
             try {

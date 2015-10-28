@@ -29,19 +29,22 @@ class WebCounterAdminController extends CRUDController {
 
             $counter = $provider->getRemoteRepository()->getCounter($object->getNumber());
 
-            /** @var WebCounterGoal $goal */
-            foreach($goals as $key => $goal)
-            {
-                if($provider->getRemoteRepository()->hasGoal($counter, $goal) === false)  {
-                    $provider->getRemoteRepository()
-                        ->addGoal($counter, $goal->getName(), $goal->getAlias(), $goal->getAction(), $key + 1);
+
+            if($counter) {
+                /** @var WebCounterGoal $goal */
+                foreach($goals as $key => $goal)
+                {
+                    if($provider->getRemoteRepository()->hasGoal($counter, $goal) === false)  {
+                        $provider->getRemoteRepository()
+                            ->addGoal($counter, $goal->getName(), $goal->getAlias(), $goal->getAction(), $key + 1);
+                    }
                 }
             }
 
-        }
 
-        if(true) {
             $request->getSession()->getFlashBag()->add("success", "Все цели установлены");
+
+
         } else {
             $request->getSession()->getFlashBag()->add("error", "Не удалось установить цели");
         }
