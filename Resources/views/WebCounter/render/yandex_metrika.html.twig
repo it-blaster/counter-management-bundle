@@ -7,10 +7,10 @@
                     w.yaCounter{{ web_counter.number }} = new Ya.Metrika({id: {{ web_counter.number }}, enableAll: true});
                 {% endfor %}
 
-                {% if web_counter_list|length > 1 %}
+                {% if web_counter_list|length > 0 %}
                     w.yandex_metrika_counters = {
                         {% for web_counter in web_counter_list %}
-                            yaCounter{{ web_counter.number }}: yaCounter{{ web_counter.number }},
+                            yaCounter{{ web_counter.number }}: yaCounter{{ web_counter.number }}{% if loop.last == false  %},{% endif %}
                         {% endfor %}
                     };
                 {% endif %}
