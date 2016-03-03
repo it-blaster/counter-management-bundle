@@ -4,7 +4,13 @@
         (w[c] = w[c] || []).push(function () {
             try {
                 {% for web_counter in web_counter_list %}
-                    w.yaCounter{{ web_counter.number }} = new Ya.Metrika({id: {{ web_counter.number }}, enableAll: true});
+                    w.yaCounter{{ web_counter.number }} = new Ya.Metrika({
+                        id: {{ web_counter.number }},
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true,
+                        webvisor: true
+                    });
                 {% endfor %}
 
                 {% if web_counter_list|length > 0 %}
